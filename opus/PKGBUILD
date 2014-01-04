@@ -7,18 +7,18 @@
 
 pkgname=opus
 pkgver=1.1
-pkgrel=1
+pkgrel=100
 pkgdesc="Codec designed for interactive speech and audio transmission over the Internet"
 arch=(i686 x86_64 armv7h)
 url="http://www.opus-codec.org/"
 license=(BSD)
 depends=(glibc)
 options=('!libtool')
-source=(http://ipv4.studio-connect.de/$pkgname-$pkgver-beta.tar.gz)
-md5sums=('804f4c62a694f986f70b6a3a7b2e32e2')
+source=(http://downloads.xiph.org/releases/opus/$pkgname-$pkgver.tar.gz)
+md5sums=('c5a8cf7c0b066759542bc4ca46817ac6')
 
 build() {
-  cd $pkgname-$pkgver-beta
+  cd $pkgname-$pkgver
   ./autogen.sh
   ./configure --prefix=/usr --enable-custom-modes --enable-fixed-point --disable-static
   make
@@ -30,7 +30,7 @@ build() {
 #}
 
 package() {
-  cd $pkgname-$pkgver-beta
+  cd $pkgname-$pkgver
   make DESTDIR="$pkgdir" install
   install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
