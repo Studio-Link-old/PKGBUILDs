@@ -19,7 +19,7 @@ md5sums=('c5a8cf7c0b066759542bc4ca46817ac6')
 
 build() {
   cd $pkgname-$pkgver
-  ./autogen.sh
+  #./autogen.sh
   ./configure --prefix=/usr --enable-custom-modes --enable-fixed-point --disable-static
   make
 }
