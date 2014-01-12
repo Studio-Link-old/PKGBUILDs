@@ -12,7 +12,8 @@ md5sums=('c596ec3e3d0e6b1f0362f8a7cff3b566')
 build() {
     
     cd $pkgname-$pkgver
-    curl https://github.com/studio-connect/baresip/compare/opus_mono.patch | patch -p1
+#    curl https://github.com/studio-connect/baresip/compare/opus_mono.patch | patch -p1
+#    curl https://github.com/studio-connect/baresip/compare/alsa_poll.patch | patch -p1
     make
 }
 
