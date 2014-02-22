@@ -7,7 +7,7 @@
 
 pkgname=opus
 pkgver=1.1
-pkgrel=100
+pkgrel=101
 pkgdesc="Codec designed for interactive speech and audio transmission over the Internet"
 arch=(i686 x86_64 armv7h)
 url="http://www.opus-codec.org/"
@@ -20,7 +20,7 @@ md5sums=('c5a8cf7c0b066759542bc4ca46817ac6')
 build() {
   cd $pkgname-$pkgver
   #./autogen.sh
-  ./configure --prefix=/usr --enable-custom-modes --enable-fixed-point --disable-static
+  ./configure --prefix=/usr --enable-fixed-point --disable-static
   make
 }
 
