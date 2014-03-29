@@ -1,7 +1,7 @@
 # Maintainer: Sebastian Reimers <service@it-sreimers.de>
 pkgname=baresip
 pkgver=0.4.10
-pkgrel=2
+pkgrel=3
 arch=(armv7h x86_64)
 url="http://www.creytiv.com/baresip.html"
 license=('BSD license')
