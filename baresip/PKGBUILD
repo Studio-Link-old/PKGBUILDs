@@ -1,18 +1,17 @@
 # Maintainer: Sebastian Reimers <service@it-sreimers.de>
 pkgname=baresip
-pkgver=0.4.10
-pkgrel=3
+pkgver=14.4.1
+pkgrel=1
 arch=(armv7h x86_64)
 url="http://www.creytiv.com/baresip.html"
 license=('BSD license')
 depends=(glibc)
-source=(http://www.creytiv.com/pub/$pkgname-$pkgver.tar.gz)
-md5sums=('e73b91a3bca4aa11a19b6967b030a458')
+source=(https://github.com/studio-connect/baresip/archive/$pkgver.tar.gz)
+md5sums=('599d70c5144f4d081bb071f321aed3b8')
 
 build() {
     
     cd $pkgname-$pkgver
-    curl https://github.com/studio-connect/baresip/compare/alsa_latency.patch | patch -p1
     curl https://github.com/studio-connect/baresip/compare/http_api.patch | patch -p1
     make
 }
