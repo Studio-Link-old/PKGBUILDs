@@ -13,6 +13,7 @@ md5sums=('2bca69418f5550ee7cc0ea7582df6a6c')
 build() {
     cd $pkgname-$pkgver-alpha
     curl https://github.com/studio-connect/baresip/compare/alsa_underrun_bug.patch | patch -p1
+    curl https://github.com/studio-connect/baresip/compare/http_api.patch | patch -p1
     make
 }
 
