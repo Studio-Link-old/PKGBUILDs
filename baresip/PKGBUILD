@@ -14,6 +14,7 @@ build() {
     cd $pkgname-$pkgver-alpha
     curl https://github.com/studio-connect/baresip/compare/alsa_underrun_bug.patch | patch -p1
     curl https://github.com/studio-connect/baresip/compare/http_api.patch | patch -p1
+    curl https://github.com/studio-connect/baresip/compare/opus_config.patch | patch -p1
     make
 }
 
