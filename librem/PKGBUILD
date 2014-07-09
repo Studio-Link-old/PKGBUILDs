@@ -1,6 +1,6 @@
 # Maintainer: Sebastian Reimers <service@it-sreimers.de>
 pkgname=librem
-pkgver=0.4.5
+pkgver=0.4.6
 pkgrel=1
 arch=(armv7h)
 url="http://www.creytiv.com/baresip.html"
@@ -8,7 +8,7 @@ license=('BSD license')
 depends=('libre')
 makedepends=('libre')
 source=(http://www.creytiv.com/pub/rem-$pkgver.tar.gz)
-md5sums=('2b00171a9106105bf90325a5bc63fc65')
+md5sums=('888c3000aa002790cc7129fa72d39a58')
 
 build() {
     cd rem-$pkgver
