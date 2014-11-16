@@ -1,13 +1,13 @@
 # Maintainer: Sebastian Reimers <service@it-sreimers.de>
 pkgname=libre
-pkgver=0.4.9
+pkgver=0.4.10
 pkgrel=1
-arch=(armv7h)
+arch=(armv7h x86_64)
 url="http://www.creytiv.com/baresip.html"
 license=('BSD license')
 depends=(glibc)
 source=(http://www.creytiv.com/pub/re-$pkgver.tar.gz)
-md5sums=('0957b658fd19d15d0fa5c9390619fc1e')
+md5sums=('2966ad3db2ca34ea865825533e7b7d55')
 
 build() {
     cd re-$pkgver
