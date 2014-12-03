@@ -1,0 +1,41 @@
+# Contributor: Sam Mulvey <archlinux@sammulvey.com>
+# Contributor: Andrea Scarpino <andrea@archlinux.org>
+# Contributor: Ganjolinux aka Basalari David <ganjolinux@gmail.com>
+
+pkgname=darkice
+pkgver=1.2
+pkgrel=1
+pkgdesc="Live audio streamer. Records audio from an audio interface, encodes it and sends it to a streaming server"
+arch=('i686' 'x86_64' 'armv7h')
+url="http://code.google.com/p/darkice/"
+license=('GPL')
+depends=('lame' 'faac' 'twolame' 'opus' 'libsamplerate')
+source=("http://darkice.googlecode.com/files/${pkgname}-${pkgver}.tar.gz"
+	'service')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  ./configure --prefix=/usr \
+              --sysconfdir=/etc \
+              --with-aacplus \
+			  --with-opus \
+			  --with-samplerate
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+
+  make DESTDIR="$pkgdir/" install
+
+  # daemon
+  install -Dm755 "$srcdir/service" "$pkgdir/usr/lib/systemd/system/darkice@.service"
+
+  mkdir -p "$pkgdir/etc/darkice"
+  mv "$pkgdir/etc/darkice.cfg" "$pkgdir/etc/darkice/darkice.cfg"
+}
+md5sums=('de541ea95a73a50f2f5e700434c22329'
+         'a2608524120e6bb1c704ed4c9165a386')
+md5sums=('de541ea95a73a50f2f5e700434c22329'
+         '1c1cde0a5c03a2190a48275c03016eb8')
