@@ -7,16 +7,16 @@ url="http://www.creytiv.com/baresip.html"
 license=('BSD license')
 depends=(glibc)
 #options=(!strip)
-source=(https://github.com/studio-connect/baresip/archive/$pkgver-beta.tar.gz)
+source=(https://github.com/studio-link/baresip/archive/$pkgver-beta.tar.gz)
 md5sums=('16446cb4104fba316cd6bfedec28b5a6')
 
 build() {
     cd $pkgname-$pkgver-beta
-    curl https://github.com/studio-connect/baresip/compare/alsa_underrun_bug.patch | patch -p1
-    curl https://github.com/studio-connect/baresip/compare/http_api.patch | patch -p1
-    curl https://github.com/studio-connect/baresip/compare/opus_config.patch | patch -p1
-    curl https://github.com/studio-connect/baresip/compare/redis.patch | patch -p1
-    curl https://github.com/studio-connect/baresip/compare/jack.patch | patch -p1
+    curl https://github.com/studio-link/baresip/compare/alsa_underrun_bug.patch | patch -p1
+    curl https://github.com/studio-link/baresip/compare/http_api.patch | patch -p1
+    curl https://github.com/studio-link/baresip/compare/opus_config.patch | patch -p1
+    curl https://github.com/studio-link/baresip/compare/redis.patch | patch -p1
+    curl https://github.com/studio-link/baresip/compare/jack.patch | patch -p1
     make
 }
 
