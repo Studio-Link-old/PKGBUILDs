@@ -1,0 +1,25 @@
+# Maintainer : speps <speps at aur dot archlinux dot org>
+# Contributor: hm_b <holger@music-nerds.net>
+# Contributor: Leslie P. Polzer <polzer@stardawn.org>
+# Contributor: Philipp Überbacher <murks at lavabit dot com>
+
+pkgname=jack_capture
+pkgver=0.9.71
+pkgrel=1
+pkgdesc="Simple CLI recording tool for JACK"
+arch=('i686' 'x86_64' 'armv7h')
+url="http://www.notam02.no/arkiv/src/"
+license=('GPL')
+depends=('lame' 'liblo')
+source=("$url$pkgname-$pkgver.tar.gz")
+md5sums=('9f5f39d2183c32a790612ca0257fdcc4')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+  make
+}
+
+package(){
+  cd "$srcdir/$pkgname-$pkgver"
+  make PREFIX="$pkgdir/usr" install
+}
