@@ -1,7 +1,7 @@
 # Maintainer: Sebastian Reimers <service@it-sreimers.de>
 pkgname=baresip
 pkgver=14.11.0
-pkgrel=1
+pkgrel=4
 arch=(armv7h x86_64)
 url="http://www.creytiv.com/baresip.html"
 patch_url="https://github.com/Studio-Link/baresip/compare/Studio-Link:master"
