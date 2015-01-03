@@ -4,6 +4,7 @@ pkgver=14.11.0
 pkgrel=1
 arch=(armv7h x86_64)
 url="http://www.creytiv.com/baresip.html"
+patch_url="https://github.com/Studio-Link/baresip/compare/Studio-Link:master"
 license=('BSD license')
 depends=(glibc)
 #options=(!strip)
@@ -12,11 +13,11 @@ md5sums=('16446cb4104fba316cd6bfedec28b5a6')
 
 build() {
     cd $pkgname-$pkgver-beta
-    curl https://github.com/studio-link/baresip/compare/alsa_underrun_bug.patch | patch -p1
-    curl https://github.com/studio-link/baresip/compare/http_api.patch | patch -p1
-    curl https://github.com/studio-link/baresip/compare/opus_config.patch | patch -p1
-    curl https://github.com/studio-link/baresip/compare/redis.patch | patch -p1
-    curl https://github.com/studio-link/baresip/compare/jack.patch | patch -p1
+    curl ${patch_url}...alsa_underrun_bug.patch | patch -p1
+    curl ${patch_url}...http_api.patch | patch -p1
+    curl ${patch_url}...opus_config.patch | patch -p1
+    curl ${patch_url}...redis.patch | patch -p1
+    curl ${patch_url}...jack.patch | patch -p1
     make
 }
 
