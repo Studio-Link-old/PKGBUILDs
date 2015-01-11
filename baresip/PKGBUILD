@@ -1,7 +1,7 @@
 # Maintainer: Sebastian Reimers <service@it-sreimers.de>
 pkgname=baresip
-pkgver=14.11.0
-pkgrel=4
+pkgver=15.1.0
+pkgrel=1
 arch=(armv7h x86_64)
 url="http://www.creytiv.com/baresip.html"
 patch_url="https://github.com/Studio-Link/baresip/compare/Studio-Link:master"
@@ -9,15 +9,15 @@ license=('BSD license')
 depends=(glibc)
 #options=(!strip)
 source=(https://github.com/studio-link/baresip/archive/$pkgver-beta.tar.gz)
-md5sums=('16446cb4104fba316cd6bfedec28b5a6')
+md5sums=('ba83256c4e8aa5605bb2629d02cd2600')
 
 build() {
     cd $pkgname-$pkgver-beta
-    curl ${patch_url}...alsa_underrun_bug.patch | patch -p1
-    curl ${patch_url}...http_api.patch | patch -p1
-    curl ${patch_url}...opus_config.patch | patch -p1
+#    curl ${patch_url}...alsa_underrun_bug.patch | patch -p1
+    curl ${patch_url}...http_listen.patch | patch -p1
     curl ${patch_url}...redis.patch | patch -p1
     curl ${patch_url}...jack.patch | patch -p1
+    curl ${patch_url}...opus_mono.patch | patch -p1
     make
 }
 
