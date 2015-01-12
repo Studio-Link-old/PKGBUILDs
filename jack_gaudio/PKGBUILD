@@ -1,0 +1,20 @@
+# Maintainer: Sebastian Reimers <service@it-sreimers.de>
+pkgname=jack_gaudio
+pkgver=15.1.0
+pkgrel=1
+arch=(armv7h x86_64)
+license=('BSD license')
+depends=(glibc)
+#options=(!strip)
+source=(https://github.com/studio-link/jack_gaudio/archive/$pkgver-beta.tar.gz)
+md5sums=('ce0537915a6410a50eaedc0a9e83cc7b')
+
+build() {
+    cd $pkgname-$pkgver-beta
+    make
+}
+
+package() {
+    cd $pkgname-$pkgver-beta
+    make DESTDIR="$pkgdir" install
+}
