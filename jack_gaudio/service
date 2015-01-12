@@ -1,0 +1,12 @@
+[Unit]
+Description=Studio Link g_audio_OUT
+After=studio-jackd
+
+[Service]
+LimitRTPRIO=infinity
+LimitMEMLOCK=infinity
+User=studio
+ExecStart=/usr/bin/jack_gaudio_out
+
+[Install]
+WantedBy=multi-user.target

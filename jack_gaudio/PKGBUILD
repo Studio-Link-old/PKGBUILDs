@@ -6,8 +6,10 @@ arch=(armv7h x86_64)
 license=('BSD license')
 depends=(glibc)
 #options=(!strip)
-source=(https://github.com/studio-link/jack_gaudio/archive/$pkgver-beta.tar.gz)
-md5sums=('ce0537915a6410a50eaedc0a9e83cc7b')
+source=("https://github.com/studio-link/jack_gaudio/archive/$pkgver-beta.tar.gz"
+	'service')
+md5sums=('532ea10b659d31f52efdbffce678c0c8'
+	 'be29b984d0203cb3a5d5c1c7606a1c26')
 
 build() {
     cd $pkgname-$pkgver-beta
@@ -17,4 +19,5 @@ build() {
 package() {
     cd $pkgname-$pkgver-beta
     make DESTDIR="$pkgdir" install
+    install -Dm755 "$srcdir/service" "$pkgdir/etc/systemd/system/studio-gaudio_out.service"
 }
