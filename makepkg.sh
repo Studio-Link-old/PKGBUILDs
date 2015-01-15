@@ -9,6 +9,8 @@ $qemu -daemonize -M vexpress-a9 -kernel zImage \
 sleep 20
 
 echo "### Install requirements ###"
+$ssh "pacman-db-upgrade"
+$ssh "$pacman -Syu"
 $ssh "$pacman -S git vim ntp nginx aiccu python2 python2-distribute avahi wget"
 $ssh "$pacman -S python2-virtualenv alsa-plugins alsa-utils gcc make redis sudo fake-hwclock"
 $ssh "$pacman -S python2-numpy ngrep tcpdump lldpd"
