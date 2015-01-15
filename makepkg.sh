@@ -20,4 +20,4 @@ $ssh "$pacman -S hiredis libmicrohttpd"
 $ssh "git clone https://github.com/Studio-Link/PKGBUILDs.git"
 
 echo "### Build libre ###"
-$ssh "cd PKGBUILDs/libre; makepkg --asroot"
+$ssh "cd PKGBUILDs/libre; makepkg --asroot -f"
