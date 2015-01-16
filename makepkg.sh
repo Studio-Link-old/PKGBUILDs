@@ -32,4 +32,5 @@ $ssh "cd PKGBUILDs/librem; $makepkg"
 $ssh "cd PKGBUILDs/baresip; $makepkg"
 
 echo "### Download all packages ###"
-$ssh "pacman -Qenq | $pacman -Sw -"
+$ssh "pacman -Qenq > /tmp/packages"
+$ssh "cat /tmp/packages | $pacman -Sw -"
