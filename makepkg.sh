@@ -30,3 +30,6 @@ makepkg="makepkg --asroot --force --install --noconfirm"
 $ssh "cd PKGBUILDs/libre; $makepkg"
 $ssh "cd PKGBUILDs/librem; $makepkg"
 $ssh "cd PKGBUILDs/baresip; $makepkg"
+
+echo "### Download all packages ###"
+$ssh "pacman -Qenq | $pacman -Sw -"
