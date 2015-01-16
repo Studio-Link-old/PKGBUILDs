@@ -17,8 +17,8 @@ $ssh "$pacman -S python2-numpy ngrep tcpdump lldpd"
 $ssh "$pacman -S spandsp gsm celt"
 $ssh "$pacman -S hiredis libmicrohttpd"
 
-wget https://github.com/Studio-Link/PKGBUILDs/raw/master/jack2/jack2-14.8.0-1-armv7h.pkg.tar.xz
-$pacman -U jack2-14.8.0-1-armv7h.pkg.tar.xz
+$ssh "wget https://github.com/Studio-Link/PKGBUILDs/raw/master/jack2/jack2-14.8.0-1-armv7h.pkg.tar.xz"
+$ssh "$pacman -U jack2-14.8.0-1-armv7h.pkg.tar.xz"
 
 echo "### Install build requirements ###"
 $ssh "$pacman -S base-devel"
