@@ -17,6 +17,9 @@ $ssh "$pacman -S python2-numpy ngrep tcpdump lldpd"
 $ssh "$pacman -S spandsp gsm celt"
 $ssh "$pacman -S hiredis libmicrohttpd"
 
+echo "### Install build requirements ###"
+$ssh "$pacman -S base-devel"
+
 $ssh "git clone https://github.com/Studio-Link/PKGBUILDs.git"
 
 echo "### Build ###"
