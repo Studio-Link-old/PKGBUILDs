@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash -ex
 qemu="/opt/qemu-2.2.0/arm-softmmu/qemu-system-arm"
 ssh="ssh  -o StrictHostKeyChecking=no root@127.0.0.1 -p2222"
 scp="scp -P2222 -r root@127.0.0.1:"
@@ -10,13 +10,11 @@ $qemu -daemonize -M vexpress-a9 -kernel zImage \
 	-m 512 -net nic -net user,hostfwd=tcp::2222-:22 -snapshot
 sleep 20
 
-$ssh "cat > /etc/pacman.d/mirrorlist << EOF
-# Studio Connect Mirror
-Server = http://mirror.studio-connect.de/$version/armv7h/\$repo
-EOF"
+$ssh "echo 'Server = http://mirror.studio-connect.de/$version/armv7h/\$repo' > /etc/pacman.d/mirrorlist"
 
 echo "### Install requirements ###"
 $ssh "pacman-db-upgrade"
+$ssh "yes | pacman -Scc"
 $ssh "$pacman -Syu"
 $ssh "pacman-db-upgrade"
 $ssh "$pacman -S git vim ntp nginx aiccu python2 python2-distribute avahi wget"
@@ -26,9 +24,6 @@ $ssh "$pacman -S spandsp gsm celt"
 $ssh "$pacman -S hiredis libmicrohttpd"
 $ssh "$pacman -S linux-am33x"
 
-$ssh "wget https://github.com/Studio-Link/PKGBUILDs/raw/master/jack2/jack2-14.8.0-1-armv7h.pkg.tar.xz"
-$ssh "$pacman -U jack2-14.8.0-1-armv7h.pkg.tar.xz"
-
 echo "### Install build requirements ###"
 $ssh "$pacman -S base-devel"
 
@@ -36,14 +31,15 @@ $ssh "git clone https://github.com/Studio-Link/PKGBUILDs.git"
 
 echo "### Build ###"
 makepkg="makepkg --asroot --force --install --noconfirm"
+$ssh "cd PKGBUILDs/jack2; $makepkg"
+$ssh "cd PKGBUILDs/opus; $makepkg"
 $ssh "cd PKGBUILDs/libre; $makepkg"
 $ssh "cd PKGBUILDs/librem; $makepkg"
 $ssh "cd PKGBUILDs/baresip; $makepkg"
 
 echo "### Download all packages ###"
-$ssh "yes | pacman -Scc"
 $ssh "pacman -Qq > /tmp/packages"
-$ssh "bash -c \"$pacman -Sw \$(cat /tmp/packages|tr '\n' ' ')\""
+$ssh "bash -c \"pacman --noconfirm --force -Sw \$(cat /tmp/packages|tr '\n' ' ')\""
 $ssh "repo-add /root/studio-link.db.tar.gz /var/cache/pacman/pkg/*.pkg.tar.xz"
 
 mkdir -p /var/www/$version
