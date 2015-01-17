@@ -32,7 +32,7 @@ $ssh "pacman -Qq > /tmp/packages"
 $ssh "bash -c \"pacman --noconfirm --force -Sw \$(cat /tmp/packages|tr '\n' ' ')\""
 
 echo "### Build ###"
-$ssh "git clone https://github.com/Studio-Link/PKGBUILDs.git /tmp/PKGBUILDs"
+$ssh "git clone https://github.com/Studio-Link/PKGBUILDs_clean.git /tmp/PKGBUILDs"
 $ssh "chown -R nobody /tmp/PKGBUILDs"
 $ssh "echo -e 'root ALL=(ALL) ALL\nnobody ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers"
 makepkg="sudo -u nobody makepkg --force --install --noconfirm --syncdeps"
@@ -46,9 +46,11 @@ $ssh "cd /tmp/PKGBUILDs/baresip; $makepkg"
 #$ssh "cd /tmp/PKGBUILDs/jack_gaudio; $makepkg"
 #$ssh "cd /tmp/PKGBUILDs/darkice; $makepkg"
 
+$ssh "cp -a /tmp/PKGBUILDs/*/*armv7h.pkg.tar.xz /var/cache/pacman/pkg/"
+
 $ssh "repo-add /root/studio-link.db.tar.gz /var/cache/pacman/pkg/*.pkg.tar.xz"
 
 mkdir -p /var/www/$version
-rm -f /var/www/$version/*.tar.gz
+rm -f /var/www/$version/*
 $scp/var/cache/pacman/pkg/*.pkg.tar.xz /var/www/$version/
 $scp/root/studio-link.db.tar.gz /var/www/$version/
