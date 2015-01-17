@@ -10,10 +10,10 @@ $qemu -daemonize -M vexpress-a9 -kernel zImage \
 	-m 512 -net nic -net user,hostfwd=tcp::2222-:22 -snapshot
 sleep 20
 
-cat > /etc/pacman.d/mirrorlist << EOF
+$ssh "cat > /etc/pacman.d/mirrorlist << EOF
 # Studio Connect Mirror
 Server = http://mirror.studio-connect.de/$version/armv7h/\$repo
-EOF
+EOF"
 
 echo "### Install requirements ###"
 $ssh "pacman-db-upgrade"
