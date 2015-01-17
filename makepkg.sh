@@ -10,6 +10,11 @@ $qemu -daemonize -M vexpress-a9 -kernel zImage \
 	-m 512 -net nic -net user,hostfwd=tcp::2222-:22 -snapshot
 sleep 20
 
+cat > /etc/pacman.d/mirrorlist << EOF
+# Studio Connect Mirror
+Server = http://mirror.studio-connect.de/$version/armv7h/\$repo
+EOF
+
 echo "### Install requirements ###"
 $ssh "pacman-db-upgrade"
 $ssh "$pacman -Syu"
@@ -38,7 +43,7 @@ $ssh "cd PKGBUILDs/baresip; $makepkg"
 echo "### Download all packages ###"
 $ssh "yes | pacman -Scc"
 $ssh "pacman -Qq > /tmp/packages"
-$ssh "$pacman -Sw `cat /tmp/packages`"
+$ssh "bash -c \"$pacman -Sw \$(cat /tmp/packages|tr '\n' ' ')\""
 $ssh "repo-add /root/studio-link.db.tar.gz /var/cache/pacman/pkg/*.pkg.tar.xz"
 
 mkdir -p /var/www/$version
