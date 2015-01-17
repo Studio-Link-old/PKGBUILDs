@@ -29,6 +29,7 @@ $ssh "$pacman -S base-devel"
 
 $ssh "git clone https://github.com/Studio-Link/PKGBUILDs.git /tmp/PKGBUILDs"
 $ssh "chown -R nobody /tmp/PKGBUILDs"
+$ssh "echo -e 'root ALL=(ALL) ALL\nnobody ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers"
 
 echo "### Build ###"
 makepkg="sudo -u nobody makepkg --force --install --noconfirm --syncdeps"

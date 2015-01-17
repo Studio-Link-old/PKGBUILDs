@@ -1,15 +1,15 @@
 # Maintainer: Sebastian Reimers <hallo@studio-connect.de>
 pkgname=jack2
-pkgver=14.6.0
+pkgver=15.1.0
 pkgrel=1
 arch=(armv7h x86_64)
 backup=(etc/security/limits.d/99-audio.conf)
-makedepends=('libffado' 'celt' 'opus' 'libsamplerate' 'libsndfile' 'fftw')
+makedepends=('opus' 'libsamplerate' 'libsndfile' 'fftw')
 #options=(!strip)
-source=("https://github.com/studio-connect/jack2/archive/$pkgver-alpha.tar.gz"
+source=("https://github.com/studio-connect/jack2/archive/$pkgver-beta.tar.gz"
 	'99-audio.conf'
 	'40-hpet-permissions.rules')
-md5sums=('f4a58df806e559e811fb80bffc618d64'
+md5sums=('4b97d354f371bd6fba6c51aaf89e74dd'
 	 'ae65b7c9ebe0fff6c918ba9d97ae342d'
 	 '471aad533ff56c5d3cbbf65ce32cadef')
 
@@ -19,13 +19,13 @@ _pyfix() {
 }
 
 build() {
-    cd $pkgname-$pkgver-alpha
+    cd $pkgname-$pkgver-beta
     python2 waf configure --prefix=/usr --alsa
     python2 waf build
 }
 
 package() {
-    cd $pkgname-$pkgver-alpha
+    cd $pkgname-$pkgver-beta
     python2 waf install --destdir="$pkgdir"
     _pyfix
     install -Dm644 "$srcdir/99-audio.conf" \
