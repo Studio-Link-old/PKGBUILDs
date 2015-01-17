@@ -14,7 +14,6 @@ $ssh "echo 'Server = http://mirror.studio-connect.de/$version/armv7h/\$repo' > /
 
 echo "### Install requirements ###"
 $ssh "pacman-db-upgrade"
-$ssh "yes | pacman -Scc"
 $ssh "$pacman -Syu"
 $ssh "pacman-db-upgrade"
 $ssh "$pacman -S git vim ntp nginx aiccu python2 python2-distribute avahi wget"
@@ -27,11 +26,15 @@ $ssh "yes | pacman -S linux-am33x"
 echo "### Install build requirements ###"
 $ssh "$pacman -S base-devel"
 
+echo "### Download all packages ###"
+$ssh "yes | pacman -Scc"
+$ssh "pacman -Qq > /tmp/packages"
+$ssh "bash -c \"pacman --noconfirm --force -Sw \$(cat /tmp/packages|tr '\n' ' ')\""
+
+echo "### Build ###"
 $ssh "git clone https://github.com/Studio-Link/PKGBUILDs.git /tmp/PKGBUILDs"
 $ssh "chown -R nobody /tmp/PKGBUILDs"
 $ssh "echo -e 'root ALL=(ALL) ALL\nnobody ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers"
-
-echo "### Build ###"
 makepkg="sudo -u nobody makepkg --force --install --noconfirm --syncdeps"
 $ssh "cd /tmp/PKGBUILDs/opus; $makepkg"
 $ssh "cd /tmp/PKGBUILDs/jack2; $makepkg"
@@ -43,9 +46,6 @@ $ssh "cd /tmp/PKGBUILDs/baresip; $makepkg"
 #$ssh "cd /tmp/PKGBUILDs/jack_gaudio; $makepkg"
 #$ssh "cd /tmp/PKGBUILDs/darkice; $makepkg"
 
-echo "### Download all packages ###"
-$ssh "pacman -Qq > /tmp/packages"
-$ssh "bash -c \"pacman --noconfirm --force -Sw \$(cat /tmp/packages|tr '\n' ' ')\"" || true
 $ssh "repo-add /root/studio-link.db.tar.gz /var/cache/pacman/pkg/*.pkg.tar.xz"
 
 mkdir -p /var/www/$version
