@@ -1,7 +1,9 @@
-#!/bin/bash
+#!/bin/bash -x
 qemu="/opt/qemu-2.2.0/arm-softmmu/qemu-system-arm"
 ssh="ssh  -o StrictHostKeyChecking=no root@127.0.0.1 -p2222"
+scp="scp -P2222 -r root@127.0.0.1:"
 pacman="pacman --noconfirm --force --needed"
+version="15.1.0-beta"
 export QEMU_AUDIO_DRV=none
 $qemu -daemonize -M vexpress-a9 -kernel zImage \
 	-drive file=root.img,if=sd,cache=none -append "root=/dev/mmcblk0p2 rw" \
@@ -11,11 +13,13 @@ sleep 20
 echo "### Install requirements ###"
 $ssh "pacman-db-upgrade"
 $ssh "$pacman -Syu"
+$ssh "pacman-db-upgrade"
 $ssh "$pacman -S git vim ntp nginx aiccu python2 python2-distribute avahi wget"
 $ssh "$pacman -S python2-virtualenv alsa-plugins alsa-utils gcc make redis sudo fake-hwclock"
 $ssh "$pacman -S python2-numpy ngrep tcpdump lldpd"
 $ssh "$pacman -S spandsp gsm celt"
 $ssh "$pacman -S hiredis libmicrohttpd"
+$ssh "$pacman -S linux-am33x"
 
 $ssh "wget https://github.com/Studio-Link/PKGBUILDs/raw/master/jack2/jack2-14.8.0-1-armv7h.pkg.tar.xz"
 $ssh "$pacman -U jack2-14.8.0-1-armv7h.pkg.tar.xz"
@@ -32,5 +36,12 @@ $ssh "cd PKGBUILDs/librem; $makepkg"
 $ssh "cd PKGBUILDs/baresip; $makepkg"
 
 echo "### Download all packages ###"
-$ssh "pacman -Qenq > /tmp/packages"
-$ssh "cat /tmp/packages | $pacman -Sw -"
+$ssh "yes | pacman -Scc"
+$ssh "pacman -Qq > /tmp/packages"
+$ssh "$pacman -Sw `cat /tmp/packages`"
+$ssh "repo-add /root/studio-link.db.tar.gz /var/cache/pacman/pkg/*.pkg.tar.xz"
+
+mkdir -p /var/www/$version
+rm -f /var/www/$version/*.tar.gz
+$scp/var/cache/pacman/pkg/*.pkg.tar.xz /var/www/$version/
+$scp/root/studio-link.db.tar.gz /var/www/$version/
