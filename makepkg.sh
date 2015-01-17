@@ -22,7 +22,7 @@ $ssh "$pacman -S python2-virtualenv alsa-plugins alsa-utils gcc make redis sudo 
 $ssh "$pacman -S python2-numpy ngrep tcpdump lldpd"
 $ssh "$pacman -S spandsp gsm celt"
 $ssh "$pacman -S hiredis libmicrohttpd"
-$ssh "yes | $pacman -S linux-am33x"
+$ssh "yes | pacman -S linux-am33x"
 
 echo "### Install build requirements ###"
 $ssh "$pacman -S base-devel"
