@@ -6,7 +6,7 @@ arch=(armv7h x86_64)
 backup=(etc/security/limits.d/99-audio.conf)
 makedepends=('opus' 'libsamplerate' 'libsndfile' 'fftw')
 #options=(!strip)
-source=("https://github.com/studio-connect/jack2/archive/$pkgver-beta.tar.gz"
+source=("https://github.com/Studio-Link/jack2/archive/$pkgver-beta.tar.gz"
 	'99-audio.conf'
 	'40-hpet-permissions.rules')
 md5sums=('4b97d354f371bd6fba6c51aaf89e74dd'
